@@ -26,9 +26,10 @@ var tagCmdDevelopment = &cobra.Command{
 	Long: `This command allows you to create a new git tag and push it to the remote repository for development.
 Usage:
     tagmaker dev <branch-name>`,
-	Args: cobra.ExactArgs(3),
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		branchName := args[0]
+		tagName := fmt.Sprintf("develop_%s", time.Now().Format("0601021504"))
 
 		// Checkout the source branch
 		err := runCommand("git", "checkout", branchName)
@@ -38,20 +39,20 @@ Usage:
 		}
 
 		// Create the tag
-		err = runCommand("git", "tag", fmt.Sprintf("develop_%s", time.Now().Format("0601021504")), "deploy")
+		err = runCommand("git", "tag", tagName)
 		if err != nil {
 			fmt.Println("Error creating tag:", err)
 			return
 		}
 
 		// Push the tag to the remote repository
-		err = runCommand("git", "push", "origin", fmt.Sprintf("develop_%s", time.Now().Format("0601021504")))
+		err = runCommand("git", "push", "origin", tagName)
 		if err != nil {
 			fmt.Println("Error pushing tag to remote:", err)
 			return
 		}
 
-		fmt.Println("Tag pushed successfully:", fmt.Sprintf("develop_%s", time.Now().Format("0601021504")))
+		fmt.Println("Tag pushed successfully:", tagName)
 	},
 }
 
@@ -62,9 +63,10 @@ var tagCmdStaging = &cobra.Command{
 	Long: `This command allows you to create a new git tag and push it to the remote repository for staging.
 Usage:
     tagmaker stg <branch-name>`,
-	Args: cobra.ExactArgs(3),
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		branchName := args[0]
+		tagName := fmt.Sprintf("staging_%s", time.Now().Format("0601021504"))
 
 		// Checkout the source branch
 		err := runCommand("git", "checkout", branchName)
@@ -74,20 +76,20 @@ Usage:
 		}
 
 		// Create the tag
-		err = runCommand("git", "tag", fmt.Sprintf("staging_%s", time.Now().Format("0601021504")), "deploy")
+		err = runCommand("git", "tag", tagName)
 		if err != nil {
 			fmt.Println("Error creating tag:", err)
 			return
 		}
 
 		// Push the tag to the remote repository
-		err = runCommand("git", "push", "origin", fmt.Sprintf("staging_%s", time.Now().Format("0601021504")))
+		err = runCommand("git", "push", "origin", tagName)
 		if err != nil {
 			fmt.Println("Error pushing tag to remote:", err)
 			return
 		}
 
-		fmt.Println("Tag pushed successfully:", fmt.Sprintf("staging_%s", time.Now().Format("0601021504")))
+		fmt.Println("Tag pushed successfully:", tagName)
 	},
 }
 
@@ -98,9 +100,10 @@ var tagCmdRegress = &cobra.Command{
 	Long: `This command allows you to create a new git tag and push it to the remote repository for regress.
 Usage:
     tagmaker rgr <branch-name>`,
-	Args: cobra.ExactArgs(3),
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		branchName := args[0]
+		tagName := fmt.Sprintf("regress_%s", time.Now().Format("0601021504"))
 
 		// Checkout the source branch
 		err := runCommand("git", "checkout", branchName)
@@ -110,20 +113,20 @@ Usage:
 		}
 
 		// Create the tag
-		err = runCommand("git", "tag", fmt.Sprintf("regress_%s", time.Now().Format("0601021504")), "deploy")
+		err = runCommand("git", "tag", tagName)
 		if err != nil {
 			fmt.Println("Error creating tag:", err)
 			return
 		}
 
 		// Push the tag to the remote repository
-		err = runCommand("git", "push", "origin", fmt.Sprintf("regress_%s", time.Now().Format("0601021504")))
+		err = runCommand("git", "push", "origin", tagName)
 		if err != nil {
 			fmt.Println("Error pushing tag to remote:", err)
 			return
 		}
 
-		fmt.Println("Tag pushed successfully:", fmt.Sprintf("regress_%s", time.Now().Format("0601021504")))
+		fmt.Println("Tag pushed successfully:", tagName)
 	},
 }
 
