@@ -16,7 +16,7 @@ func main() {
 var useOrigin bool
 
 var rootCmd = &cobra.Command{
-	Use:   "tagmaker",
+	Use:   "tag-maker",
 	Short: "A CLI tool for creating and pushing git tags",
 	Long:  `This tool helps you create and push git tags to a remote repository using a simple CLI interface.`,
 }
@@ -42,7 +42,7 @@ var tagCmdDevelopment = &cobra.Command{
 	Short: "Create and push a new git tag to development",
 	Long: `This command allows you to create a new git tag and push it to the remote repository for development.
 Usage:
-    tagmaker dev <branch-name>`,
+    tag-maker dev <branch-name>`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		branchName := getBranchName(args[0])
@@ -88,7 +88,7 @@ var tagCmdStaging = &cobra.Command{
 	Short: "Create and push a new git tag to staging",
 	Long: `This command allows you to create a new git tag and push it to the remote repository for staging.
 Usage:
-    tagmaker stg <branch-name>`,
+    tag-maker stg <branch-name>`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		branchName := getBranchName(args[0])
@@ -134,7 +134,7 @@ var tagCmdRegress = &cobra.Command{
 	Short: "Create and push a new git tag to regress",
 	Long: `This command allows you to create a new git tag and push it to the remote repository for regress.
 Usage:
-    tagmaker rgr <branch-name>`,
+    tag-maker rgr <branch-name>`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		branchName := getBranchName(args[0])
@@ -180,7 +180,7 @@ var tagCmdAll = &cobra.Command{
 	Short: "Create and push new git tags for all environments",
 	Long: `This command allows you to create new git tags and push them to the remote repository for all environments (development, staging, regress).
 Usage:
-    tagmaker all <branch-name>`,
+    tag-maker all <branch-name>`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		branchName := getBranchName(args[0])
