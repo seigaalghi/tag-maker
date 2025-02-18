@@ -26,6 +26,7 @@ func init() {
 	rootCmd.AddCommand(tagCmdDevelopment)
 	rootCmd.AddCommand(tagCmdStaging)
 	rootCmd.AddCommand(tagCmdRegress)
+	rootCmd.AddCommand(tagCmdSandbox)
 	rootCmd.AddCommand(tagCmdAll)
 }
 
@@ -174,6 +175,52 @@ Usage:
 	},
 }
 
+// tagCmdSandbox represents the sandbox tag command
+var tagCmdSandbox = &cobra.Command{
+	Use:   "sbx [branch-name]",
+	Short: "Create and push a new git tag to sandbox",
+	Long: `This command allows you to create a new git tag and push it to the remote repository for sandbox.
+Usage:
+    tag-maker sbx <branch-name>`,
+	Args: cobra.ExactArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		branchName := getBranchName(args[0])
+		tagName := fmt.Sprintf("sandbox_%s", time.Now().Format("0601021504"))
+
+		if useOrigin {
+			// Fetch the latest updates from the remote repository
+			err := runCommand("git", "fetch", "origin")
+			if err != nil {
+				fmt.Println("Error fetching from remote:", err)
+				return
+			}
+		}
+
+		// Checkout the branch
+		err := runCommand("git", "checkout", branchName)
+		if err != nil {
+			fmt.Println("Error checking out branch:", err)
+			return
+		}
+
+		// Create the tag
+		err = runCommand("git", "tag", tagName)
+		if err != nil {
+			fmt.Println("Error creating tag:", err)
+			return
+		}
+
+		// Push the tag to the remote repository
+		err = runCommand("git", "push", "origin", tagName)
+		if err != nil {
+			fmt.Println("Error pushing tag to remote:", err)
+			return
+		}
+
+		fmt.Println("Tag pushed successfully:", tagName)
+	},
+}
+
 // tagCmdAll represents the all tag command
 var tagCmdAll = &cobra.Command{
 	Use:   "all [branch-name]",
@@ -184,7 +231,7 @@ Usage:
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		branchName := getBranchName(args[0])
-		envs := []string{"develop", "staging", "regress"}
+		envs := []string{"develop", "staging", "regress", "sandbox"}
 		for _, env := range envs {
 			tagName := fmt.Sprintf("%s_%s", env, time.Now().Format("0601021504"))
 
